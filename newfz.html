@@ -1,0 +1,254 @@
+<tmpl_if name="usertype">
+	<script type="text/javascript">
+		function adduserselect()
+		{
+			var selectnode = document.getElementById("selectuser").cloneNode(true);
+			selectnode.id = "";
+			
+			var topnode = document.getElementById("selectusers");
+			topnode.appendChild(selectnode);
+		}
+		
+		function filter(filterid, pattern) {
+			if((Number(filterid) != 'NaN')) {
+				var searchpattern = new RegExp(pattern);
+				var search = location.href.search(searchpattern);
+				if (search == -1) {
+					location.href=location.href+"&"+pattern+filterid;
+				} else {
+					var replacepattern = new RegExp(pattern+'[^&]*','g');
+					location.href=location.href.replace(replacepattern, pattern+filterid);
+				}
+			} else {
+				return false;
+			}
+		}
+		
+		function adduserfromkurs()
+		{
+			var selectnode = document.getElementById("selectkurs");
+			var kursid = selectnode.options[selectnode.selectedIndex].value;
+			filter(kursid,'lk=');
+		}
+
+	</script>
+</tmpl_if>
+
+<tmpl_if name="view">
+<p id="contentheadline">Fehlzeit ansehen / drucken:</p> 
+<p id="printheadline"><a onclick="javascript:window.print();return false;"><img src="print.gif" alt="drucken"> Dokument drucken</a></p>
+<tmpl_else>
+<p id="contentheadline">Neue Fehlzeit eintragen:</p>
+<tmpl_if name="post"><p id="contentheadline" class="red">Fehler: es müssen alle Felder richtig ausgefüllt sein !</p><br></tmpl_if>
+</tmpl_if>
+<tmpl_if name="view" op="!=" value="1"><form action="index.php?p=fz" method="post" name="neuefz"></tmpl_if>
+<table id="newfz" class="contenttable">
+	<tmpl_if name="view">
+	<tr class="print">
+		<td class="printid"><p>ID</p></td>
+		<td class="printid"><p>{tmpl_var name='printfid'}</p></td>
+	</tr>
+	</tmpl_if>
+	<tr>
+		<td>Sch&uuml;lername:</td>
+		<td id="selectusers">
+			<tmpl_if name="view">
+				<tmpl_if name="schuelerselect">
+				<tmpl_loop name="schuelerselect">
+				{tmpl_var name='sname'}, {tmpl_var name='svorname'}<tmpl_if name="tutorkuerzel">, Tutor: {tmpl_var name='tutorkuerzel'} <tmpl_if name="tutorname">({tmpl_var name='tutorname'})</tmpl_if></tmpl_if><br>
+				</tmpl_loop>
+				</tmpl_if>
+			<tmpl_else>
+				<tmpl_if name="usertype">
+					<img src="plus.gif" onclick="javascript:adduserselect(); return false;" width="50">
+					oder <input type="button" onclick="javascript: adduserfromkurs(); return false;" value="Kurs einf&uuml;gen">
+					<select id="selectkurs" size="1">
+						<option value="0">Kurs w&auml;hlen...</option>
+						<tmpl_loop name="kurseladenloop">
+							<option value="{tmpl_var name='kid'}" <tmpl_if name="selected">selected</tmpl_if>><tmpl_if name="ktname">{tmpl_var name='ktname'}</tmpl_if><tmpl_if name="ktkuerzel"> ({tmpl_var name='ktkuerzel'}{tmpl_var name='knummer'})</tmpl_if><tmpl_if name="usertype"><tmpl_if name="aname"> (Jahrgang {tmpl_var name='aname'})</tmpl_if></tmpl_if></option>
+						</tmpl_loop>
+					</select>
+					<br><br>
+				</tmpl_if>
+				<select name="sid[]" size="1" <tmpl_if name="usertype" op="!=" value="1">disabled<tmpl_else> id="selectuser"</tmpl_if>>
+					<tmpl_if name="usertype" op="!=" value="0"><option value="">Sch&uuml;ler ausw&auml;hlen...</option></tmpl_if>
+					<tmpl_if name="schuelerselect">
+					<tmpl_loop name="schuelerselect">
+					<option value="{tmpl_var name='sid'}" <tmpl_if name="selected">selected</tmpl_if>>{tmpl_var name='sname'}, {tmpl_var name='svorname'}</option>
+					</tmpl_loop>
+					</tmpl_if>
+				</select>
+				<tmpl_if name="schuelerselected">
+				<tmpl_loop name="schuelerselected">
+					<select name="sid[]" size="1">
+						<option value="{tmpl_var name='sid'}">{tmpl_var name='sname'}, {tmpl_var name='svorname'}</option>
+					</select>
+				</tmpl_loop>
+				</tmpl_if>
+			</tmpl_if>
+		</td>
+	</tr>
+	<tmpl_if name="view">
+	<tr>
+		<td>Eingetragen am</td>
+		<td>{tmpl_var name='feintragedatum'}</td>
+	</tr>
+	<tr>
+		<td>Geändert am</td>
+		<td> {tmpl_var name='faktualisiertdatum'}
+			<tmpl_if name="faktualisiertvonusername">
+			von
+			<tmpl_if name="faktualisiertvonusertype">
+				{tmpl_var name='faktualisiertvonusername'} ({tmpl_var name='faktualisiertvonuservorname'})
+			</tmpl_else>
+				{tmpl_var name='faktualisiertvonusername'}, {tmpl_var name='faktualisiertvonuservorname'}
+			</tmpl_if>
+			</tmpl_if>
+		</td>
+	</tr>
+	</tmpl_if>
+	<tr>
+		<td>Kurs</td>
+		<td cols>
+				<table id="kurse">
+				<tr id="kurse">
+					<td id="kurse"> Stunde</td>
+					<td id="kurse"> Kurs </td>
+				</tr>
+				<tmpl_if name="stundenvm">
+				<tmpl_loop name="stundenvm">
+				<tr id="kurse">
+					<td id="kurse">{tmpl_var name='stunde'}. Stunde: </td>
+					<td id="kurse">
+						<select name="kurs[{tmpl_var name='stunde'}]" size="1">
+							<option value="0">Kurs ausw&auml;hlen...</option>
+							<tmpl_if name="kurse">
+							<tmpl_loop name="kurse">
+							<option value="{tmpl_var name='kid'}" <tmpl_if name="selected">selected</tmpl_if>><tmpl_if name="ktname">{tmpl_var name='ktname'}</tmpl_if><tmpl_if name="ktkuerzel"> ({tmpl_var name='ktkuerzel'}{tmpl_var name='knummer'})</tmpl_if><tmpl_if name="usertype"><tmpl_if name="aname"> (Jahrgang {tmpl_var name='aname'})</tmpl_if></tmpl_if></option>
+							</tmpl_loop>
+							</tmpl_if>
+						</select>
+					</td>
+				</tr>
+				</tmpl_loop>
+				</tmpl_if>
+				</table>
+				
+				<table id="kurse">
+				<tr id="kurse">
+					<td id="kurse"> Stunde</td>
+					<td id="kurse"> Kurs </td>
+				</tr>
+				<tmpl_if name="stundennm">
+				<tmpl_loop name="stundennm">
+				<tr id="kurse">
+					<td id="kurse">{tmpl_var name='stunde'}. Stunde: </td>
+					<td id="kurse">
+						<select name="kurs[{tmpl_var name='stunde'}]" size="1">
+							<option value="0">Kurs ausw&auml;hlen...</option>
+							<tmpl_if name="kurse">
+							<tmpl_loop name="kurse">
+							<option value="{tmpl_var name='kid'}" <tmpl_if name="selected">selected</tmpl_if>><tmpl_if name="ktname">{tmpl_var name='ktname'}</tmpl_if><tmpl_if name="ktkuerzel"> ({tmpl_var name='ktkuerzel'}{tmpl_var name='knummer'})</tmpl_if><tmpl_if name="usertype"><tmpl_if name="aname"> (Jahrgang {tmpl_var name='aname'})</tmpl_if></tmpl_if></option>
+							</tmpl_loop>
+							</tmpl_if>
+						</select>
+					</td>
+				</tr>
+				</tmpl_loop>
+				</tmpl_if>
+				</table>
+		</td>
+	</tr>
+	<tr>
+		<td>Datum:</td>
+		<tmpl_if name="view">
+		<td style="text-align:center;">
+			<p>{tmpl_var name='datum'}</p>
+		</td>
+		<tmpl_else>
+		<td style="text-align:center;">
+			<input type="text" name="datum" <tmpl_if name="post">value="{tmpl_var name='datum'}"<tmpl_else>value="TT.MM.JJJJ"</tmpl_if> id="datum" size="10" maxlength="10"><input type="button" value="..." id="calendar-trigger">
+			<script>
+				Calendar.setup({
+					inputField : "datum",
+					button    : "calendar-trigger",
+					ifFormat   : "%d.%m.%Y",
+				});
+			</script>
+		</td>
+		</tmpl_if>
+	</tr>
+	<tr>
+		<td>Entschuldigung / <br>Fehlgrund:</td>
+		<td style="text-align:center;">
+			<textarea name="fgrund" cols="100" rows="10"><tmpl_if name="post">{tmpl_var name='fgrund'}<tmpl_else><tmpl_if name="usertype"><tmpl_if name="neuefz">Schüler hat an diesem Tag gefehlt, sich aber noch nicht entschuldigt (es liegt keine Entschuldigung vor).</tmpl_if></tmpl_if></tmpl_if><tmpl_if name="view">{tmpl_var name='fgrund'}</tmpl_if></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td>Status:</td>
+		<td style="text-align:center;">
+			<tmpl_if name="view">
+					<p>{tmpl_var name='fsname'}</p>
+			</tmpl_else>
+				<select name="status" size="1">
+					<tmpl_if name="status">
+					<tmpl_loop name="status">
+					<option value="{tmpl_var name='fsid'}" <tmpl_if name="selected">selected</tmpl_if>>{tmpl_var name='fsname'}</option>
+					</tmpl_loop>
+					</tmpl_if>			
+				</select>
+			</tmpl_if>
+			<tmpl_if name="fzentschuldigen">
+				<p>
+				<tmpl_if name="nida">
+				<a href="index.php?p=ent&fid={tmpl_var name='fid'}&nid={tmpl_var name='nida'}">
+					<img id="fzentschuldigen" src="accept_attest.gif" alt="Entschuldigt mit Attest">
+				</a>
+				</tmpl_if>
+				<a href="index.php?p=ent&fid={tmpl_var name='fid'}&nid={tmpl_var name='nid'}">
+					<img id="fzentschuldigen" src="accept.gif" alt="Entschuldigung akzeptieren">
+				</a>
+				<a href="index.php?p=ent&fid={tmpl_var name='fid'}&nid={tmpl_var name='nidn'}">
+					<img id="fzentschuldigen" src="accept_not.gif" alt="Entschuldigung akzeptieren">
+				</a>
+				</p>
+			</tmpl_if>
+		</td>
+	</tr>
+	<tmpl_if name="view" op="!=" value="1">
+	<tr>
+		<td>Senden:</td>
+		<td><input type="submit" value="Eintragen"> <input type="reset" value="Formular leeren"></td>
+	</tr>
+	</tmpl_if>
+	<tmpl_if name="view">
+	<tr>
+		<td><p><u>Unterschrift:</u></p></td>
+		<td>
+			<p> __________________________________________________________
+				<br>Datum, Unterschrift: <tmpl_if name="volljaehrig"><tmpl_else><u>(Erziehungsberechtige/r)</u></tmpl_if>
+			</p>
+		</td>
+	</tr>
+	</tmpl_if>
+</table>
+<tmpl_if name="view" op="!=" value="1"></form></tmpl_if>
+<tmpl_if name="post">
+	<script type="text/javascript">
+		var kursearray = new Array();
+		<tmpl_if name="selectedkurse">
+		<tmpl_loop name="selectedkurse">
+		kursearray[{tmpl_var name='stid'}] = {tmpl_var name='kid'};
+		</tmpl_loop>
+		</tmpl_if>
+		for (var i in kursearray) {
+			if(document.forms["neuefz"].elements["kurs["+i+"]"]) {
+				for (var j=0;j<document.forms["neuefz"].elements["kurs[1]"].options.length;j++) {
+					if(document.forms["neuefz"].elements["kurs["+i+"]"].options[j].value == kursearray[i]) {
+						document.forms["neuefz"].elements["kurs["+i+"]"].options[j].selected = 'selected';
+					}
+				}
+			}
+		}
+	</script>
+</tmpl_if>

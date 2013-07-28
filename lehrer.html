@@ -1,0 +1,45 @@
+<p id="contentheadline">Benutzer verwalten</p>
+<table id="user" class="contenttable">
+	<tr>
+		<td>ID</td>
+		<td>Lehrer-Name</td>
+		<td>Lehrer-Vorname</td>
+		<td>Lehrer-Kürzel</td>
+		<td>Login-Kennung</td>
+		<td>E-Mail</td>
+	</tr>
+	<form action="index.php?p=leh" method="POST">
+	<tr>
+		<td><input type="submit" value="eintragen"></td>
+		<td><input type="text" name="lname"></td>
+		<td><input type="text" name="lvorname"></td>
+		<td><input type="text" name="lkuerzel"></td>
+		<td><input type="text" name="limportedid"></td>
+		<td><input type="text" name="lemail"></td>		
+	</tr>
+	</form>
+	<tmpl_if name="lehrer">
+	<tmpl_loop name="lehrer">
+	<tr>
+		<td>
+			{tmpl_var name='lid'}
+		</td>
+		<td>
+			<tmpl_if name="lname">{tmpl_var name='lname'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="lvorname">{tmpl_var name='lvorname'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="lkuerzel">{tmpl_var name='lkuerzel'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="limportedid">{tmpl_var name='limportedid'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="lemail">{tmpl_var name='lemail'}</tmpl_if>
+		</td>
+	</tr>
+	</tmpl_loop>
+	</tmpl_if>
+</table>

@@ -1,0 +1,13 @@
+Kurzanleitung zur Installation von EOSys Version 1.0:
+
+- Datenbank erstellen (eosys_v1_0.sql)
+- ./config.php anpassen
+- ./headerschrift.gif und ./banner.jpg mit den Logos der Schule austauschen
+- ./remote.auth.php anpassen
+- ./install/index.php ausführen und ersten Benutzer mit Admin-Rechten erstellen
+- Cronjobs anlegen (./mail/mail.php, ./cron/delfz.php, ./cron/dellogin.php)
+
+- Lehrer in Datenbank importieren
+
+- ./winprosaimport Verzeichnisschutz anpassen (.htaccess, .htpasswd)
+- Schülerdaten importieren

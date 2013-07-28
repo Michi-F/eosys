@@ -1,0 +1,10 @@
+.orange{
+	color:#FF8000;
+}
+.green{
+	color:#088A08;
+}
+p.red,p.green,p.orange{
+	margin:0;
+	padding:0;
+}

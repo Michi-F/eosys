@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Winprosa Import</title>
+		<style type="text/css">
+			table {
+				text-align:center;
+				float:left;
+			}
+			td {
+				padding-right: 3px;
+				padding-left: 3px;
+			}
+			.red {
+				color:red;
+				padding:0;
+				margin:0;
+			}
+			p {
+				text-align:center;
+			}
+			.submit{
+				color:red;
+			}
+			div#left{
+				width:37%;
+				position:absolute;
+				top:110px;left:0;bottom:0;
+				overflow:scroll;
+			}
+			div#right{
+				width:60%;
+				position:absolute;
+				top:110px;left:39%;bottom:0;
+				overflow:scroll;
+			}
+		</style>
+	</head>
+	<body>
+	<form action="index.php" method="post">
+		<p><a href="index.php?s=1">Kurse importieren</a> | <a href="index.php?s=3">Sch&uuml;ler importieren</a></p>
+		<p><input type="submit" name="senden" class="submit" value="Neue Kurse und Abijahrg&auml;nge erstellen"></p>
+		<div id="left">
+		<table border="1">
+			<tr>
+				<td>Neue Abi-Jahrg&auml;nge</td>
+			</tr>
+			<tmpl_loop name="neueabijahrgang">
+				<tr>
+				<td><input type="text" name="abijahrgang[]" value="{tmpl_var name='aname'}"></td>
+			</tr>
+			</tmpl_loop>
+		</table>
+		<br><br><br><br>
+		<table border="1">
+			<tmpl_loop name="neuekurse">
+				<tr>
+					<td>Kursname</td>
+					<td>{tmpl_var name="ktname"}</td>
+					<td rowspan="3">
+						<table border="1">
+							<tr>
+								<td>Abi-Jahrgang:</td>
+								<td>Anzahl zu erstellenden Kurse:</td>
+							</tr>
+							<tmpl_loop name="jahre">
+								<tr>
+									<td>{tmpl_var name="aname"}</td>
+									<td><input type="text" name="neuekurseanzahl[{tmpl_var name='ktid'}][{tmpl_var name='aname'}]" value="{tmpl_var name="kursanzahl"}" size="3"></td>
+								</tr>
+							</tmpl_loop>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>Kurs-K&uuml;rzel</td>
+					<td>{tmpl_var name="ktkuerzel"}</td>
+				</tr>
+				<tr>
+					<td>Stundenzahl / Woche</td>
+					<td>{tmpl_var name="ktstunden"}</td>
+				</tr>
+				<tr>
+					<td colspan="3">&nbsp;</td>
+				</tr>
+			</tmpl_loop>
+		</table>
+		</div>
+		<div id="right">
+		<table border="1">
+			<tr>
+					<td colspan="5"><p class="red">In folgenden Zeilen sind Fehler aufgetreten:</p></td>
+				</tr>
+				<tr>
+					<td>Sch&uuml;lername</td>
+					<td>Sch&uuml;ler Vorname</td>
+					<td>Zeile</td>
+					<td>Spalte</td>
+					<td>Unbekannter Wert <br> (zwischen > und <)</td>
+				</tr>
+			<tmpl_loop name="datenfehler">
+				<tr>
+					<td>{tmpl_var name="schuelername"}</td>
+					<td>{tmpl_var name="schuelervorname"}</td>
+					<td>{tmpl_var name="zeile"}</td>
+					<td>{tmpl_var name="spalte"}</td>
+					<td>{tmpl_var name="fehlervalue"}</td>
+				</tr>
+			</tmpl_loop>
+		</table>
+		<br><br><br><br><br>
+		<table id="fehlertable" border="1">
+			<tr>
+					<td colspan="8"><p class="red">Folgende Sch&uuml;ler wurden ignoriert, da Werte fehlerhaft sind:</p></td>
+				</tr>
+				<tr>
+					<td>Fehler</td>
+					<td>Sch&uuml;lername</td>
+					<td>Sch&uuml;ler Vorname</td>
+					<td>Zeile</td>
+					<td>Abijahrgang</td>
+					<td>Abijahrgang-ID</td>
+					<td>Log-In Name</td>
+					<td>Identifikationsnummer <br> (nicht zwingend erforderlich)</td>
+					<td>Geburtsdatum</td>
+					<td>Tutor (ID)</td>
+					<td>Tutor (ausgelesen)</td>
+					<td>Reli</td>
+				</tr>
+			<tmpl_loop name="schuelerdatenfehlerarray">
+				<tr>
+					<td>{tmpl_var name="fehler"}</td>
+					<td>{tmpl_var name="schuelername"}</td>
+					<td>{tmpl_var name="schuelervorname"}</td>
+					<td>{tmpl_var name="zeile"}</td>
+					<td>{tmpl_var name="abijahrgang"}</td>
+					<td>{tmpl_var name="abijahrgangid"}</td>
+					<td>{tmpl_var name="simportedid"}</td>
+					<td>{tmpl_var name="idnr"}</td>
+					<td>{tmpl_var name="geburtsdatum"}</td>
+					<td>{tmpl_var name="tutor"}</td>
+					<td><tmpl_if name="tutorvalue">{tmpl_var name="tutorvalue"}</tmpl_if></td>
+					<td><tmpl_if name="relivalue">{tmpl_var name="relivalue"}</tmpl_if></td>
+				</tr>
+			</tmpl_loop>
+		</table>
+		</div>
+	</form>
+	</body>
+</html>

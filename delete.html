@@ -1,0 +1,31 @@
+<p id="contentheadline">Fehlzeit L&ouml;schen</p>
+<table class="contenttable">
+	<tmpl_if name="fragen">
+	<form action="index.php?p=del" method="post" name="neuefz">
+	<tr>
+		<td colspan="2">
+			Sind Sie sicher, dass Sie <a href="index.php?p=fz&v={tmpl_var name='fid' escape='none'}">diese Fehlzeit</a>
+			wirklich l&ouml;schen wollen ?
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="hidden" name="f" value="{tmpl_var name='fid'}">
+			<input type="submit" value="Ja">
+		</td>
+		<td>
+			<input type="button" value="Abbrechen" onclick="javascript:window.close();return true;">
+		</td>
+	</tr>
+	</tmpl_if>
+	<tmpl_if name="fehler">
+	<tr>
+		<td>{tmpl_var name="fehlermsg" escape='none'}</td>
+	</tr>
+	</tmpl_if>
+	<tmpl_if name="erfolgreich">
+	<tr>
+		<td>Die Fehlzeit wurde erfolgreich gelöscht. <a href="javascript:opener.location.reload(); window.close();">Fenster schlie&szlig;en</a></td>
+	</tr>
+	</tmpl_if>
+</table>

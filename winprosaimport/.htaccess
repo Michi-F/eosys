@@ -1,0 +1,6 @@
+AuthUserFile /var/www/entsys/winprosaimport/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Geschuetzter Bereich"
+AuthType Basic
+
+require valid-user

@@ -1,0 +1,33 @@
+<p id="contentheadline">{tmpl_var name='logonmsgheadline'}</p>
+<p id="contentheadline">{tmpl_var name='logonmsgaction' escape='none'}</p>
+<tmpl_if name="weiterleitung">
+	<script language="javascript">
+	function Weiterleitung()
+	{
+	   location.href="{tmpl_var name='target'}";
+	}
+
+	window.setTimeout("Weiterleitung()", 1000); // weiterleitung nach 2 sec.
+	</script>
+</tmpl_if>
+<br>
+<tmpl_if name='logonform'>
+<form action="index.php?p=lo" method="post">
+	<table id="logon" class="contenttable">
+		<tr>
+			<td>Name:</td>
+			<td><input type="text" name="logonname"></td>
+		</tr>
+		<tr>
+			<td>Passwort:</td>
+			<td><input type="password" name="logonpw"></td>
+		</tr>
+		<tr>
+			<td>Senden:</td>
+			<td><input type="submit" value="Login"></td>
+		</tr>
+	</table>
+<tmpl_else>
+	<p id="contentheadline"><a href="index.php?p=lo&l=lo">Logout</a></p>
+</tmpl_if>
+</form>

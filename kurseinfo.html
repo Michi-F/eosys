@@ -1,0 +1,85 @@
+<script type="text/javascript">
+	function schueleradd() 
+	{
+		var schuelerid = document.getElementById("schueleradd").value;
+		if(!isNaN(schuelerid))
+		{
+			window.location = window.location+"&add&&sid="+schuelerid;
+		}
+	}
+</script>
+
+<p id="contentheadline">{tmpl_var name='title'}</p>
+<table class="contenttable">
+	<tr>
+		<th>Fach</th>
+		<th>Kurs</th>
+		<th>Lehrer</th>
+		<th>Abi-Jahrgang</th>
+		<th>Wochenstunden</th>
+	</tr>
+	<tmpl_if name="kurs">
+	<tmpl_loop name="kurs">
+	<tr>
+		<td>
+			<tmpl_if name="ktname">{tmpl_var name='ktname'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="ktkuerzel">{tmpl_var name='ktkuerzel'}</tmpl_if><tmpl_if name="knummer">{tmpl_var name='knummer'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="lname">{tmpl_var name='lname'} ({tmpl_var name='lkuerzel'})</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="aname">{tmpl_var name='aname'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="ktstunden">{tmpl_var name='ktstunden'}</tmpl_if>
+		</td>
+	</tr>
+	</tmpl_loop>
+	</tmpl_if>
+</table>
+<br>
+<table class="contenttable">
+	<tr>
+		<th>Sch&uuml;ler-Name</th>
+		<th colspan="2">Sch&uuml;ler-Vorname</th>
+	</tr>
+	<tmpl_if name="kursbearbeiten">
+	<tr>
+		<td colspan="2">
+			<select id="schueleradd">
+				<tmpl_if name="schueleradd">
+				<tmpl_loop name="schueleradd">
+					<option value="{tmpl_var name='sid'}">{tmpl_var name='sname'}, {tmpl_var name='svorname'}</option>
+				</tmpl_loop>
+				</tmpl_if>
+			</select>
+		</td>		
+		<td>
+			<img class="plus" src="plus.gif" alt="Sch&uuml;ler hinzuf&uuml;gen" onclick="javascript:schueleradd();">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3"></td>
+	</tr>
+	</tmpl_if>
+	<tmpl_if name="schueler">
+	<tmpl_loop name="schueler">
+	<tr>
+		<td>
+			{tmpl_var name='sname'}
+		</td>
+		<td>
+			{tmpl_var name='svorname'}
+		</td>
+		<td>
+			<tmpl_if name="kursbearbeiten">
+			<a href="index.php?p=ki&del&k={tmpl_var name='kid'}&sid={tmpl_var name='sid'}"><img class="delete" src="delete.gif" alt="Sch&uuml;ler l&ouml;schen"></a>
+			</tmpl_if>
+		</td>
+	</tr>
+	</tmpl_loop>
+	</tmpl_if>
+</table>

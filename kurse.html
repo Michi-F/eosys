@@ -1,0 +1,86 @@
+<p id="contentheadline">Kurse verwalten</p>
+<table class="contenttable">
+	<tr>
+		<td>ID</td>
+		<td>Fach</td>
+		<td>Kurs</td>
+		<td>Lehrer</td>
+		<td>Abi-Jahrgang</td>
+		<td>Sch&uuml;leranzahl</td>
+		<td>Kurslehrer</td>
+		<tmpl_if name="kursbearbeiten"><td>Kurs bearbeiten</td></tmpl_if>
+	</tr>
+	<form action="index.php?p=ku" method="POST">
+	<tr>
+		<td><input type="submit" value="Eintragen"></td>
+		<td>
+			<select name="ktid">
+			<option value="0">Kurstyp w&auml;hlen...</option>
+			<tmpl_if name="selectktid">
+			<tmpl_loop name="selectktid">
+				<option value="{tmpl_var name='ktid'}">{tmpl_var name="ktname"} <tmpl_if name="ktkuerzel">({tmpl_var name="ktkuerzel"} {tmpl_var name="ktstunden"}-Std.)</tmpl_if></option>
+			</tmpl_loop>
+			</tmpl_if>
+			</select>
+		</td>
+		<td colspan="2"><input type="text" name="knummer" placeholder="Kursnummer eintragen"></td>
+		<td colspan="3">
+			<select name="aid">
+			<option value="0">Jahrgang w&auml;hlen...</option>
+			<tmpl_if name="selectaid">
+			<tmpl_loop name="selectaid">
+				<option value="{tmpl_var name='aid'}">{tmpl_var name="aname"></option>
+			</tmpl_loop>
+			</tmpl_if>
+			</select>
+		</td>
+	</tr>
+	</form>
+	<tmpl_if name="kurse">
+	<tmpl_loop name="kurse">
+	<tr>
+		<td>
+			{tmpl_var name='kid'}
+		</td>
+		<td>
+			<tmpl_if name="ktname">{tmpl_var name='ktname'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="ktkuerzel">{tmpl_var name='ktkuerzel'}</tmpl_if><tmpl_if name="knummer">{tmpl_var name='knummer'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="lid" op=">" value="0">{tmpl_var name='lname'}</tmpl_if>
+		</td>
+		<td>
+			<tmpl_if name="aname">{tmpl_var name='aname'}</tmpl_if>
+		</td>
+		<td>
+			<a href="index.php?p=ki&k={tmpl_var name='kid'}">{tmpl_var name='schueleranzahl'}</a>
+		</td>
+		<td>
+			<tmpl_if name="kurseintragen">
+				<tmpl_if name="lid" op="==" value="0"><a href="index.php?p=ku&ein={tmpl_var name='kid'}"><img src="klehrer_eintr.gif" alt="Als Kurslehrer eintragen"></a></tmpl_if>
+			<tmpl_else>
+				<a href="index.php?p=ku&loe={tmpl_var name='kid'}"><img src="klehrer_entf.gif" alt="Als Kurslehrer l&ouml;schen"></a>
+			</tmpl_if>
+		</td>
+		<tmpl_if name="kursbearbeiten">
+			<td>
+				<form action="index.php?p=ku" method="post">
+					<input type="hidden" name="kid" value="{tmpl_var name='kid'}">
+					<select name="lid" size="1"> 
+						<option value="0">Lehrer ausw&auml;hlen</option>
+						<tmpl_if name="lehrerarray">
+						<tmpl_loop name="lehrerarray">
+						<option value="{tmpl_var name='klid'}" <tmpl_if name="lselected" op="==" value="1">selected</tmpl_if>>{tmpl_var name='klname'}</option>
+						</tmpl_loop>
+						</tmpl_if>
+					</select>
+				<input type="submit" value="&#187;">
+				</form>
+			</td>
+		</tmpl_if>
+	</tr>
+	</tmpl_loop>
+	</tmpl_if>
+</table>

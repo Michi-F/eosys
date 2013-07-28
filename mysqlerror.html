@@ -1,0 +1,16 @@
+<p id="contentheadline">Fehler: Bitte wenden Sie sich an den Administrator !</p>
+<table id="mysqlerror" class="contenttable">
+	<tr>
+		<th>Fehlernummer:</th>
+		<td>{tmpl_var name="nummer"}</td>
+	</tr>
+	<tr>
+		<th>Fehler:</th>
+		<td>{tmpl_var name="fehler"}</td>
+	</tr>
+	<tr>
+		<td>Fehler in Statement:</td>
+		<td>{tmpl_var name="statement" ESCAPE = 'none' }</td>		
+	</tr>
+	
+</table>

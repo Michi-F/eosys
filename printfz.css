@@ -1,0 +1,8 @@
+div#kopf,#menuecolor,#menu ,div#trennzeile,p#printheadline {
+	display:none;
+}
+div#inhalt{
+	position:absolute;
+	top:0;
+	left:0;
+}

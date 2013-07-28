@@ -1,0 +1,13 @@
+img#fzentschuldigen{
+	vertical-align:middle;
+}
+table#kurse{
+	margin:0;
+	padding:0;
+	float:left;
+}
+tr#kurse,td#kurse{
+	margin:0;
+	padding:0;
+	text-align:center;
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Winprosa Import</title>
+		<style type="text/css">
+			table {
+				text-align:center;
+				float:left;
+			}
+			td {
+				padding-right: 3px;
+				padding-left: 3px;
+			}
+			.red {
+				color:red;
+				padding:0;
+				margin:0;
+			}
+			p {
+				text-align:center;
+			}
+			.submit{
+				color:red;
+			}
+			div#left{
+				width:60%;
+				position:absolute;
+				top:110px;left:0;bottom:0;
+				overflow:scroll;
+			}
+			div#right{
+				width:35%;
+				position:absolute;
+				top:110px;left:63%;bottom:0;
+				overflow:scroll;
+			}
+		</style>
+	</head>
+	<body>
+	<form action="index.php" method="post">
+		<p><a href="index.php?s=1">Kurse importieren</a> | <a href="index.php?s=3">Sch&uuml;ler importieren</a></p>
+		<p><input type="submit" name="schueler" class="submit" value="Neue Sch&uuml;ler hinzuf&uuml;gen"></p>
+	</form>
+	<div id="left">
+		<p><u>Anzahl der neuen Sch&uuml;ler: {tmpl_var name="neueschueleranzahl"}</u></p>
+		<table border="1">
+			<tmpl_loop name="neueschueler">
+				<tr>
+					<td>Sch&uuml;lername</td>
+					<td>{tmpl_var name="schuelername"}</td>
+					<td rowspan="7">
+						<table border="1">
+							<tr>
+								<td>Kurs-ID</td>
+								<td>Kursname</td>
+							</tr>
+							<tmpl_loop name="kurse">
+								<tr>
+									<td>{tmpl_var name="kursid"}</td>
+									<td>{tmpl_var name="kursname"}</td>
+								</tr>
+							</tmpl_loop>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>Sch&uuml;lervorname</td>
+					<td>{tmpl_var name="schuelervorname"}</td>
+				</tr>
+				<tr>
+					<td>Abijahrgang</td>
+					<td>{tmpl_var name="abijahrgang"}</td>
+				</tr>
+				<tr>
+					<td>Login-Name</td>
+					<td>{tmpl_var name="simportedid"}</td>
+				</tr>
+				<tr>
+					<td>Identifikationsnummer</td>
+					<td>{tmpl_var name="idnr"}</td>
+				</tr>
+				<tr>
+					<td>Geburtsdatum</td>
+					<td>{tmpl_var name="geburtsdatum"}</td>
+				</tr>
+				<tr>
+					<td>Tutor</td>
+					<td>{tmpl_var name="tutor"}</td>
+				</tr>
+				<tr>
+					<td colspan="3">&nbsp;</td>
+				</tr>
+			</tmpl_loop>
+		</table>
+	</div>
+	<div id="right">
+		<table border="1">
+			<tr>
+					<td colspan="5"><p class="red">In folgenden Zeilen sind Fehler aufgetreten:</p></td>
+				</tr>
+				<tr>
+					<td>Sch&uuml;lername</td>
+					<td>Sch&uuml;ler Vorname</td>
+					<td>Zeile</td>
+					<td>Spalte</td>
+					<td>Unbekannter Wert <br> (zwischen > und <)</td>
+				</tr>
+			<tmpl_loop name="datenfehler">
+				<tr>
+					<td>{tmpl_var name="schuelername"}</td>
+					<td>{tmpl_var name="schuelervorname"}</td>
+					<td>{tmpl_var name="zeile"}</td>
+					<td>{tmpl_var name="spalte"}</td>
+					<td>{tmpl_var name="fehlervalue"}</td>
+				</tr>
+			</tmpl_loop>
+		</table>
+		<br><br><br><br><br>
+		<table id="fehlertable" border="1">
+			<tr>
+					<td colspan="8"><p class="red">Folgende Sch&uuml;ler wurden ignoriert, da Werte fehlerhaft sind:</p></td>
+				</tr>
+				<tr>
+					<td>Fehler</td>
+					<td>Sch&uuml;lername</td>
+					<td>Sch&uuml;ler Vorname</td>
+					<td>Zeile</td>
+					<td>Abijahrgang</td>
+					<td>Abijahrgang-ID</td>
+					<td>Log-In Name</td>
+					<td>Identifikationsnummer <br> (nicht zwingend erforderlich)</td>
+					<td>Geburtsdatum</td>
+					<td>Tutor (ID)</td>
+					<td>Tutor (ausgelesen)</td>
+					<td>Reli</td>
+				</tr>
+			<tmpl_loop name="schuelerdatenfehlerarray">
+				<tr>
+					<td>{tmpl_var name="fehler"}</td>
+					<td>{tmpl_var name="schuelername"}</td>
+					<td>{tmpl_var name="schuelervorname"}</td>
+					<td>{tmpl_var name="zeile"}</td>
+					<td>{tmpl_var name="abijahrgang"}</td>
+					<td>{tmpl_var name="abijahrgangid"}</td>
+					<td>{tmpl_var name="simportedid"}</td>
+					<td>{tmpl_var name="idnr"}</td>
+					<td>{tmpl_var name="geburtsdatum"}</td>
+					<td>{tmpl_var name="tutor"}</td>
+					<td><tmpl_if name="tutorvalue">{tmpl_var name="tutorvalue"}</tmpl_if></td>
+					<td><tmpl_if name="relivalue">{tmpl_var name="relivalue"}</tmpl_if></td>
+				</tr>
+			</tmpl_loop>
+		</table>
+		</div>
+	</body>
+</html>

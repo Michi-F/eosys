@@ -1,0 +1,102 @@
+<script type="text/javascript">
+	function kurseadd() 
+	{
+		var kursaddid = document.getElementById("neuerkurs").value;
+		if(!isNaN(kursaddid))
+		{
+			window.location = "index.php?p=acc&add&kid="+kursaddid;
+		}
+	}
+
+</script>
+
+<p id="contentheadline">Mein Account:</p>
+<form action="index.php?p=acc" method="post" name="account">
+	<table id="account" class="contenttable">
+		<tr>
+			<td>pers.Daten:</td>
+			<td colspan="2">
+				<p id="accdaten">Vorname: <input type="text" value="{tmpl_var name='uservn'}" disabled="disabled"></p>
+				<p id="accdaten">Nachname: <input type="text" value="{tmpl_var name='usernn'}" disabled="disabled"></p>
+				<tmpl_if name="usertype"><p id="accdaten">E-Mail: <input type="text" name="useremail" value="<tmpl_if name="useremail">{tmpl_var name='useremail'}</tmpl_if>"></p></tmpl_if>
+			</td>
+		</tr>
+		<tmpl_if name="usertype">
+		</tmpl_else>
+		<tr>
+			<td>Schuldaten:</td>
+			<td colspan="2">
+				Abi-Jahrgang:
+				<input type="text" value="{tmpl_var name='saname'}" disabled="disabled">
+				Tutor:
+				<input type="text" value="{tmpl_var name='slname'}" disabled="disabled">
+			</td>
+		</tr>
+		</tmpl_if>
+		<tr>
+			<td>Kurse:</td>
+			<td colspan="2">
+				<ul id="acckurse">
+					<tmpl_if name="kurse">
+					<tmpl_loop name="kurse">						
+						<li id="acckurse">
+							<tmpl_if name="usertype">
+								<a href="index.php?p=ki&k={tmpl_var name='kid'}">
+							</tmpl_if>
+							{tmpl_var name='ktname'} ({tmpl_var name='ktkuerzel'}{tmpl_var name='knummer'})<tmpl_if name="lname">, {tmpl_var name="lname"}</tmpl_if> <tmpl_if name="usertype">(JG {tmpl_var name='aname'})</tmpl_if>
+							<tmpl_if name="usertype">
+								</a>
+							</tmpl_if>
+							<tmpl_if name="usertype" op="==" value="0">
+							<tmpl_if name="skurseloeschen">
+							<a href="index.php?p=acc&del&kid={tmpl_var name='kid'}"><img class="delete" src="delete.gif" alt="Kurs l&ouml;schen"></a>
+							</tmpl_if>
+							</tmpl_if>
+						</li>
+					</tmpl_loop>
+					</tmpl_if>
+					<tmpl_if name="usertype" op="==" value="0">
+					<tmpl_if name="skurshinzufuegen">
+						<li id="acckurse">
+							<select id="neuerkurs">
+							<tmpl_if name="neuerkurs">
+							<tmpl_loop name="neuerkurs">
+								<option value="{tmpl_var name='kid'}">
+								{tmpl_var name='ktname'} ({tmpl_var name='ktkuerzel'}{tmpl_var name='knummer'})<tmpl_if name="lname">, {tmpl_var name="lname"}</tmpl_if> <tmpl_if name="usertype">(JG {tmpl_var name='aname'})</tmpl_if>
+								</option>
+							</tmpl_loop>
+							</tmpl_if>
+							</select>
+							<img class="plus" src="plus.gif" alt="Kurs hinzuf&uuml;gen" onclick="javascript:kurseadd();">
+						</li>
+					</tmpl_if>
+					</tmpl_if>
+				</ul>
+			</td>
+		</tr>
+		<tmpl_if name="usertype">
+		<tr>
+			<td>Einstellungen:</td>
+			<td colspan="2">
+				<ul>
+					<li>Für Kurslehrer: <br>
+						<ul>
+							<li><input type="checkbox" name="sendemail[1]" <tmpl_if name="lsendemail">checked</tmpl_if>> E-mail an mich senden, wenn ein Schüler aus meinem Kurs entschuldigt wurde</li><br>
+						</ul>
+					</li>
+					<li>Für Tutoren:<br>
+						<ul>
+							<li><input type="checkbox" name="sendemail[2]" <tmpl_if name="lsendemailtutor">checked</tmpl_if>> E-mail an mich senden, wenn ein Schüler eine Entschudigung geschrieben hat</li>
+						</ul>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>Senden:</td>
+			<td><input type="submit" value="Eintragen" name="acc"></td>
+			<td><input type="reset" value="Formular leeren"></td>
+		</tr>
+		</tmpl_if>
+	</table>
+</form>

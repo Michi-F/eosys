@@ -1,0 +1,17 @@
+p#accdaten {
+	white-space: nowrap;
+	float:left;
+	margin:0.5%;
+}
+.plus{
+	height:20px;
+	float:right;
+}
+.delete{
+	height:20px;
+	float:right;
+}
+li#acckurse{
+	margin-bottom:10px;	
+	border-bottom: 1px solid #000; 
+}

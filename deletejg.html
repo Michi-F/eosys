@@ -1,0 +1,47 @@
+<p id="contentheadline">Jahrgang Löschen</p>
+
+<table class="contenttable">
+	<tr>
+		<td>Jahrgang</td>
+		<td>Senden</td>
+	</tr>
+	<tr>
+	
+	<tmpl_if name="jahrgangloop">
+	<form action="index.php?p=deljg" method="POST">
+	<tr>
+		<td>
+			<select name="aid">
+			<tmpl_loop name="jahrgangloop">
+				<option value="{tmpl_var name="aid"}">{tmpl_var name="aname"}</option>
+			</tmpl_loop>
+			</select>
+		</td>
+		<td><input type="submit" name="send" value="senden"></td>
+	</tr>
+	</form>
+	</tmpl_if>
+	
+	<tmpl_if name="delaid">
+		<form action="index.php?p=deljg" method="POST">
+			<tr>
+				<td colspan="2">
+				<p class="red">Soll der Jahrgang "{tmpl_var name="delaname"}" wirklich gel&ouml;scht werden ?</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="hidden" name="best" value="1">
+					<select name="aid">
+						<option value="{tmpl_var name="delaid"}">{tmpl_var name="delaname"}</option>
+					</select>
+				</td>
+				<td><input type="submit" name="send" value="Ja, l&ouml;schen"></td>
+			</tr>
+		</form>
+	</tmpl_if>
+	<tmpl_if name="success">
+		<tr>
+			<td colspan="2">Der Jahrgang wurde erfolgreich gel&ouml;scht</td>
+	</tmpl_if>
+</table>

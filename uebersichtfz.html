@@ -1,0 +1,137 @@
+<script type="text/javascript">
+	function filter(filterid, pattern) {
+		if((Number(filterid) != 'NaN')) {
+			var searchpattern = new RegExp(pattern);
+			var search = location.href.search(searchpattern);
+			if (search == -1) {
+				location.href=location.href+"&"+pattern+filterid;
+			} else {
+				var replacepattern = new RegExp(pattern+'[^&]*','g');
+				location.href=location.href.replace(replacepattern, pattern+filterid);
+			}
+		} else {
+			return false;
+		}
+	}
+	function filtervondatum() {
+		var datum = document.getElementById('filterdatum').value;
+		var search = location.href.search(/fvdatum=/);
+		if (search == -1) {
+			location.href=location.href+"&fvdatum="+datum;
+		} else {
+			location.href=location.href.replace(/fvdatum=[^&]*/g, "fvdatum="+datum);
+		}
+	}	
+</script>
+<p id="contentheadline">&Uuml;bersicht der Fehlzeiten</p>
+<table id="uebersichtfz" class="contenttable">
+	<tr>
+		<th>Datum</th>
+		<th>Kurs(e)</th>
+		<tmpl_if name="usertype">
+		<th>Sch&uuml;lername</th>
+		</tmpl_if>
+		<th>Status</th>
+		<th>Link</th>
+		<th>L&ouml;schen</th>
+	</tr>
+	<tr>
+		<td>
+			ab <input type="text" name="filterdatum" value="{tmpl_var name='filterdatum'}" id="filterdatum" size="10" maxlength="10">
+			<input type="button" value="..." id="calendar-trigger">
+			<script>
+				Calendar.setup({
+					inputField : "filterdatum",
+					button    : "calendar-trigger",
+					ifFormat   : "%d.%m.%Y",
+					onUpdate   : filtervondatum
+				});
+			</script>
+		</td>
+		<td>
+			<select name="filterkurse" size="1" onchange="javascript:filter(this.value,'f=');"> 
+				<option value="">Kurs W&auml;hlen...</option>
+				<option value="">Zeige alles</option>
+				<tmpl_if name="filterkurse">
+				<tmpl_loop name="filterkurse">
+				<option value="{tmpl_var name='kid'}" <tmpl_if name="selected">selected</tmpl_if>>{tmpl_var name='ktname'} <tmpl_if name="ktkuerzel">({tmpl_var name='ktkuerzel'}{tmpl_var name='knummer'})</tmpl_if><tmpl_if name="aname"> (Abi-Jahrgang {tmpl_var name='aname'})</tmpl_if></option>
+				</tmpl_loop>
+				</tmpl_if>
+			</select>
+		</td>
+		<tmpl_if name="usertype">
+		<td>
+			<select name="filterschueler" size="1" onchange="javascript:filter(this.value,'sid=');"> 
+				<option value="">Sch&uuml;ler ausw&auml;hlen...</option>
+				<option value="">Zeige alle</option>
+				<tmpl_if name="filterschuelerloop">
+				<tmpl_loop name="filterschuelerloop">
+				<option value="{tmpl_var name='sid'}" <tmpl_if name='selected'>selected</tmpl_if>>{tmpl_var name='sname'}, {tmpl_var name='svorname'}</option>
+				</tmpl_loop>
+				</tmpl_if>
+			</select>
+		</td>
+		</tmpl_if>
+		<td>
+			<select name="filterstatus" size="1" onchange="javascript:filter(this.value,'fs=');"> 
+				<option value="">Status W&auml;hlen...</option>
+				<option value="">Zeige alles</option>
+				<tmpl_if name="filterstatusloop">
+				<tmpl_loop name="filterstatusloop">
+				<option value="{tmpl_var name='fsid'}" {tmpl_var name='selected'}>{tmpl_var name='fsname'}</option>
+				</tmpl_loop>
+				</tmpl_if>
+			</select>
+		</td>
+		<td><hr></td>
+		<td><hr></td>
+	</tr>
+	<tmpl_if name="kurse">
+	<tmpl_loop name="kurse">
+	<tr>
+		<td>{tmpl_var name='ffehldatum'}</td>
+		<td>{tmpl_var name='kurse' escape='none'}</td>
+		<tmpl_if name="usertype">
+		<th>{tmpl_var name='schuelername'} <tmpl_if name="lehrername">({tmpl_var name='lehrername'})</tmpl_if></th>
+		</tmpl_if>
+		<td>
+		<tmpl_if name='fsid' op='==' value='1'>
+			<p class="orange">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='2'>
+			<p class="red">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='3'>
+			<p class="green">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='4'>
+			<p class="red">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='5'>
+			<p class="orange">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='6'>
+			<p class="green">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='7'>
+			<p class="red">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='8'>
+			<p class="green">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='9'>
+			<p class="green">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		<tmpl_if name='fsid' op='==' value='10'>
+			<p class="red">{tmpl_var name='fsname'}</p>
+		</tmpl_if>
+		</td>
+		<td>
+			<a href="index.php?p=fz&v={tmpl_var name='fid'}">Ansehen</a>
+			<tmpl_if name="ueadmin">({tmpl_var name='fid'})</tmpl_if>
+		</td>
+		<td><tmpl_if name="loeschen"><a href="index.php?p=del&f={tmpl_var name='fid'}" target="_blank"><img src="delete.gif" alt="l&ouml;schen"></a></tmpl_if></a></td>
+	</tr>
+	</tmpl_loop>
+	</tmpl_if>
+</table>

@@ -1,0 +1,75 @@
+<script type="text/javascript">
+	function filter(filterid, pattern) {
+		if((Number(filterid) != 'NaN')) {
+			var searchpattern = new RegExp(pattern);
+			var search = location.href.search(searchpattern);
+			if (search == -1) {
+				location.href=location.href+"&"+pattern+filterid;
+			} else {
+				var replacepattern = new RegExp(pattern+'[^&]*','g');
+				location.href=location.href.replace(replacepattern, pattern+filterid);
+			}
+		} else {
+			return false;
+		}
+	}	
+</script>
+<p id="contentheadline">Fehlzeiten Auswertung</p>
+
+<table class="contenttable">
+	<tr>
+		<td>ID</td>
+		<td>
+			<a href="#" onclick="javascript: filter(1,'s='); return false;">
+			Schüler-Name
+			</a>
+		</td>
+		<td>
+			<a href="#" onclick="javascript: filter(2,'s='); return false;">
+			bereinigte "liegt nicht vor"
+			</a>
+		</td>
+		<td>
+			<a href="#" onclick="javascript: filter(3,'s='); return false;">
+			liegt nicht vor
+			</a>
+		</td>
+		<td>
+			<a href="#" onclick="javascript: filter(4,'s='); return false;">
+			davon eingetragen
+			</a>
+		</td>
+		<td>
+			<a href="#" onclick="javascript: filter(5,'s='); return false;">
+			warte auf Best./ Beurl.
+			</a>
+		</td>
+		<td>
+			<a href="#" onclick="javascript: filter(6,'s='); return false;">
+			nicht akzeptiert
+			</a>
+		</td>
+	</tr>
+	<tmpl_if name="auswertungloop">
+	<tmpl_loop name="auswertungloop">
+		<tr>
+			<td>{tmpl_var name="sid"}</td>
+			<td nowrap>{tmpl_var name="schuelername"} ({tmpl_var name="tutor"}) ({tmpl_var name="aname"})</td>
+			<td><tmpl_if name="flnvcount">{tmpl_var name="bereinigteflnvcount"}</tmpl_if></td>
+			<td><tmpl_if name="flnvcount">{tmpl_var name="flnvcount"}</tmpl_if></td>
+			<td><tmpl_if name="flvcount">{tmpl_var name="flvcount"}</tmpl_if></td>
+			<td><tmpl_if name="fnecount">{tmpl_var name="fnecount"}</tmpl_if></td>
+			<td><tmpl_if name="fnacount">{tmpl_var name="fnacount"}</tmpl_if></td>
+		</tr>
+	</tmpl_loop>
+	</tmpl_if>
+</table>
+
+	<ul>
+		<li>a) "bereinigte "liegt nicht vor"" = Differenz von b)-c)</li>
+		<li>b) "liegt nicht vor" = Summe aller "Entschuldigung liegt nicht vor" - Einträge </li>
+		<li>c) "davon eingetragen" = Summe aller Einträge, welche das gleiche Datum wie b) haben,
+		aber noch nicht bestätigt sind (Status: "warte auf Bestätigung" / "Beurlaubung beantragen")
+		<li>"warte auf Best./Beurl." = Summe aller Einträge, welche noch nicht bestätigt sind (Status: "warte auf Bestätigung" / "Beurlaubung beantragen")
+		<li>"nicht Akzeptiert" = Summe aller "Entschuldigung nicht akzeptiert"-Einträge</li>
+	</ul>
