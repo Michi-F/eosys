@@ -1,0 +1,44 @@
+#################################################################################################################################
+EOSys (Auflistung aller zu EOSys gehörenden Dateien: siehe ./eosys.txt)
+
+	Copyright © 2012-2013 Michael Felger
+
+    EOSys is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License Version 3 as published by
+    the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License Version 3 for more details.
+
+    You should have received a copy of the GNU General Public License Version 3
+    along with EOSys.  If not, see <http://www.gnu.org/licenses/gpl-3.0/>.
+
+    Siehe ./gpl-3.0.txt (GNU GENERAL PUBLIC LICENSE Version 3)
+
+
+#################################################################################################################################
+
+Ausgenommene Dateien / Programmcode / Software
+
+Das Paket von EOSys enthält Dateien mit Programmcode und Software (folgende Auflistung), welche von Dritten stammen.
+Diese Dateien sind eigenständige Software und nicht Teil von EOSys.
+Daher stehen diese Dateien nicht unter der Lizenz von EOSys sondern unter ihren jeweils eigenen Lizenzen und Bedingungen.
+Für die Einhaltung der jeweiligen Lizenzbedingungen sind Sie selbst verantwortlich.
+
+- ./vlib/*
+vLIB Version 4.2.1
+http://sourceforge.net/projects/vlib/
+siehe ./vlib/LICENSE.txt
+
+- ./kalender/*
+DHTML Calendar, version 1.0
+siehe ./kalender/README
+
+- ./mail/class.phpmailer.php
+- ./mail/class.smtp.php
+PHPMailer - PHP email class, Version: 5.1
+siehe ./mail/LICENSE
+
+#################################################################################################################################
