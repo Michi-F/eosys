@@ -127,7 +127,9 @@ else
 			kurs Inner Join
 			schueler On kurs.aid = schueler.aid
 		Where
-			kurs.kid = ".mysql_real_escape_string($_GET['k'])."	
+			kurs.kid = ".mysql_real_escape_string($_GET['k'])."
+		Order By
+			schueler.sname, schueler.svorname, schueler.sid
 	";
 	$kurseschueleradd->query($kurseschueleraddstatement);
 	$kurseinfo->setDbLoop("schueleradd",$kurseschueleradd->query);

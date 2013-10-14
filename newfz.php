@@ -186,6 +186,8 @@ function lehrerform($userselected, $statusselected, $loadschuelerfromkurs)
 			  lehrer.lid = ".$logon->user->userid." And
 			  abijahrgang.aname >= ".date('Y')." And
 			  schueler.sid IN (0".$userselected.")
+			Order By
+			  schueler.sname, schueler.svorname, schueler.sid
 		";
 		$userselectedsql->query($userselectedstatement);
 	}
@@ -208,6 +210,8 @@ function lehrerform($userselected, $statusselected, $loadschuelerfromkurs)
 			  lehrer.lid = ".$logon->user->userid." And
 			  abijahrgang.aname >= ".date('Y')." And
 			  kurs.kid = '".mysql_real_escape_string($loadschuelerfromkurs)."'
+			Order By
+			  schueler.sname, schueler.svorname, schueler.sid
 		";
 		$userselectedsql->query($userselectedstatement);
 	}
@@ -227,6 +231,8 @@ function lehrerform($userselected, $statusselected, $loadschuelerfromkurs)
 		Where
 		  lehrer.lid = ".$logon->user->userid." And
 		  abijahrgang.aname >= ".date('Y')."
+		Order By
+			schueler.sname, schueler.svorname, schueler.sid
 	";
 	$usersql->query($userstatement);
 	
@@ -377,7 +383,9 @@ if(isset($_GET['v']) && is_numeric($_GET['v'])) {
 		  Inner Join
 		  lehrer On schueler.lid = lehrer.lid
 		Where
-		  fehlzeitenschueler.fid = '".mysql_real_escape_string($_GET['v'])."';
+		  fehlzeitenschueler.fid = '".mysql_real_escape_string($_GET['v'])."'
+		Order By
+		  schueler.sname, schueler.svorname, schueler.sid
 	";
 	$schuelerselectsql->query($schuelerselectstatement);
 	while($schuelerselectsql->fetch_obj()) {
