@@ -402,7 +402,7 @@ if(isset($_GET['v']) && is_numeric($_GET['v'])) {
 	{
 		$newfztmpl->setvar("volljaehrig",1);
 	}
-	elseif(isset($schuelerselectarray[0]["volljaehrig"]) && $schuelerselectarray[0]["volljaehrig"] === 1)
+	elseif(isset($schuelerselectarray[0]["volljaehrig"]) && $schuelerselectarray[0]["volljaehrig"] == 1)
 	{
 		$newfztmpl->setvar("volljaehrig",1);
 	}
