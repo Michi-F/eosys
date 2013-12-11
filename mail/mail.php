@@ -21,8 +21,8 @@
 ********************************************************************************************/
 ?>
 <?php
+include("../config.php");
 include($conf['documentroot']."vlib/vlibTemplate.php");
-include($conf['documentroot']."config.php");
 include($conf['documentroot']."mysql.class.php");
 include($conf['documentroot']."functions.inc.php");
 include($conf['documentroot']."mail/class.phpmailer.php");

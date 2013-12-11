@@ -26,11 +26,13 @@ Kurslehrer:
 		<td>Nachricht</td>
 	</tr>
 <?php
-include('../vlib/vlibTemplate.php');
 include("../config.php");
-include("../mysql.class.php");
-include("../functions.inc.php");
-include("class.phpmailer.php");
+include($conf['documentroot']."vlib/vlibTemplate.php");
+include($conf['documentroot']."mysql.class.php");
+include($conf['documentroot']."functions.inc.php");
+include($conf['documentroot']."mail/class.phpmailer.php");
+
+header("Content-Type: text/html; charset=utf-8");
 
 class fehlzeittext
 {
