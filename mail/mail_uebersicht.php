@@ -41,6 +41,7 @@ class fehlzeittext
 	
 	function fehlzeittext($fid, $ffehldatum, $schuelername, $schuelercount, $kurse, $fsid, $fsname, $typ)
 	{
+		global $conf;
 		$this->ok = false;
 		if($typ == 1) 
 		{
