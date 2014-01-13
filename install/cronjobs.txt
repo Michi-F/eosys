@@ -1,0 +1,3 @@
+0 1 * * * php -f /var/www/eosys/mail/mail.php
+0 1 * * * php -f /var/www/eosys/cron/dellogin.php
+0 1 * * * php -f /var/www/eosys/cron/delfz.php

@@ -72,6 +72,7 @@ Folgende Auflistung enthält alle Dateien, die Teil von EOSys sind:
 ./mail/mysqlerror.html
 
 ./install/eosys_v1_0.sql
+./install/cronjobs.txt
 ./install/index.php
 ./install/install.txt
 ./install/mysqlerror.html
