@@ -39,5 +39,5 @@ if(!$logon->ok && $_GET['p']!='lo') {
 	$rechte = new rechte();
 }
 
-header('Content-Type: text/html; charset=utf8');
+header('Content-Type: text/html; charset=utf-8');
 ?>
