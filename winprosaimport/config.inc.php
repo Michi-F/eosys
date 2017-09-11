@@ -45,4 +45,5 @@ $zweistuendigebezeichnungen = array( # bei diesen Werten im SemX-xxx Feld wird a
 $nichtbelegtbezeichnungen = array( # bei diesen Werten im SemX-xxx Feld wird angenommen, dass der Schueler das Fach nicht belegt hat
 	".","{t}"
 );
+$csvTrennzeichen = ",";
 ?>

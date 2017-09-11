@@ -35,7 +35,7 @@ $neueabijahrganarray = array(); # array der AbiJahrgänge, die in der Datei vert
 
 $row = 1;
 $handle = fopen ("schuelerdaten.csv","r");	// Datei zum Lesen öffnen
-while ( ($zeile = fgetcsv ($handle, 1000000, ";")) !== FALSE ) // Daten werden aus der Datei Zeilenweise ausgelesen
+while ( ($zeile = fgetcsv ($handle, 1000000, $csvTrennzeichen)) !== FALSE ) // Daten werden aus der Datei Zeilenweise ausgelesen
 {
     if($row == 1) # erste Zeile als Beschriftung der Spalten !
 	{
